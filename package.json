@@ -1,11 +1,10 @@
 {
   "name": "frontend",
   "version": "0.0.0",
-  "packageManager": "pnpm@10.5.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:frontend": "node dist/frontend/server/server.mjs"
