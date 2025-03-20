@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
-  selector: 'Footer',
+  selector: 'Footer-garage',
   imports: [CommonModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
