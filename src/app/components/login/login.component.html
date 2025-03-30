@@ -1,6 +1,6 @@
 <div class="center-container">
   <div class="container">
-    
+
     <!-- Message Toast Component -->
     <message-toast [message]="message" [show]="showMessage"></message-toast>
     <message-error-toast [message]="message" [show]="showMessageError"></message-error-toast>
@@ -8,7 +8,8 @@
     <div class="row">
       <div class="text-center mb-4">
         <!-- Toggle Buttons -->
-        <button class="btn btn-secondary me-2 wow zoomIn" (click)="toggleLogin()" *ngIf="showRegister" data-wow-delay="0.5s">
+        <button class="btn btn-secondary me-2 wow zoomIn" (click)="toggleLogin()" *ngIf="showRegister"
+          data-wow-delay="0.5s">
           Se connecter
         </button>
         <button class="btn btn-success wow zoomIn" (click)="toggleRegister()" *ngIf="showLogin" data-wow-delay="0.5s">
@@ -16,6 +17,7 @@
         </button>
       </div>
     </div>
+
     <div class="row">
       <!-- Login Form -->
       <div class="col-lg-3"></div>
@@ -43,6 +45,7 @@
       </div>
       <div class="col-lg-3"></div>
     </div>
+
     <div class="row">
       <!-- Sign-Up Form -->
       <div class="col-lg-3"></div>
