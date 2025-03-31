@@ -1,0 +1,58 @@
+<div class="container-fluid py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="bg-primary h-100 d-flex flex-column justify-content-center text-center p-5">
+          <h1 class="text-white mb-4">Estimation de devis</h1>
+          <form>
+            <div class="row g-3">
+              <div class="col-12 col-sm-6">
+                <select 
+                  class="form-select border-0" 
+                  style="height: 55px;"
+                  (change)="onMarqueSelect($event)">
+                    <option selected>Selectionner Marque</option>
+                    <option 
+                      *ngFor="let marque of marques" 
+                      [value]="marque._id"
+                    >
+                      {{ marque.nom }}
+                    </option>
+                </select>
+              </div>
+              <div class="col-12 col-sm-6">
+                <select 
+                  class="form-select border-0" 
+                  style="height: 55px;"
+                  (change)="onModeleSelect($event)"
+                >
+                    <option selected>Selectionner Modele</option>
+                    <option 
+                      *ngFor="let modele of modeles" 
+                      [value]="modele._id"
+                    >
+                      {{ modele.title }} {{ modele.annee }}
+                    </option>
+                </select>
+              </div>
+              <div class="col-12 col-sm-6">
+                    <select class="form-select border-0" style="height: 55px;">
+                        <option selected>Selectionner Motorisation</option>
+                        <option 
+                          *ngFor="let motorisation of motorisations" 
+                          [value]="motorisation._id"
+                        >
+                          {{ motorisation.nom }}
+                        </option>
+                    </select>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-secondary w-100 py-3" type="submit">Valider</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
