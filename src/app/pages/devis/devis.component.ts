@@ -4,11 +4,14 @@ import { MarqueService } from '../../services/marque/marque.service';
 import { Marque } from '../../models/marque.model';
 import { Modele } from '../../models/modele.model';
 import { Motorisation } from '../../models/motorisation.model';
+import { FooterComponent } from "../../components/footer/footer.component";
+import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { TopBarComponent } from "../../components/top-bar/top-bar.component";
 
 @Component({
   selector: 'app-devis',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TopBarComponent, NavbarComponent, FooterComponent],
   templateUrl: './devis.component.html',
   styleUrl: './devis.component.scss'
 })

@@ -3,12 +3,16 @@ import { ArticleListComponent } from './components/article-list/article-list.com
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { FiltreVehiculeComponent } from './components/filtre-vehicule/filtre-vehicule.component';
+import { DevisComponent } from './pages/devis/devis.component';
+import { PrestationComponent } from './pages/prestation/prestation.component';
 
 export const routes: Routes = [
     { path: 'articles', component: ArticleListComponent },
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent},
+    { path: 'devis', component: DevisComponent},
     { path: 'filtre', component: FiltreVehiculeComponent},
+    { path: 'prestation', component: PrestationComponent},
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 
 ];
