@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TopBarComponent } from "../top-bar/top-bar.component";
-import { NavbarComponent } from "../navbar/navbar.component";
+import { Component, OnInit } from '@angular/core';
 import { FooterComponent } from "../footer/footer.component";
+import { NavbarComponent } from "../navbar/navbar.component";
+import { TopBarComponent } from "../top-bar/top-bar.component";
 
 @Component({
   standalone: true,

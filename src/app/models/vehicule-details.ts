@@ -16,3 +16,9 @@ export class Marque {
     nom: string = '';
     modeles: Modele[] = [];
 }
+
+export interface VehiculeDetailsFilter {
+    marque: Marque;
+    annee: number;
+    consommation: number;
+}
