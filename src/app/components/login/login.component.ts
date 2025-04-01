@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
           window.location.href = '/devis';
         } else {
           this.message = 'Connexion échouée, veuillez vérifier vos identifiants';
-          this.user.email = '';
+          // this.user.email = '';  
           this.showMessageError = true;
         }
       });

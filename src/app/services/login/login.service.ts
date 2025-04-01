@@ -22,4 +22,9 @@ export class LoginService {
       headers: this.getAuthHeaders()
     });
   }
+
+  logout(): void {
+    localStorage.removeItem('token'); // Remove the token from localStorage
+    window.location.href = '/home'; // Redirect to home page or login page
+  }
 }
