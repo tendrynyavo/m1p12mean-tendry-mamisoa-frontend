@@ -12,7 +12,8 @@ import { UsersService } from '../../users/users.service';
   selector: 'Login',
   imports: [CommonModule, FormsModule, MessageToastComponent, MessageErrorToastComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  providers: [LoginService, UsersService]
 })
 export class LoginComponent implements OnInit {
   user: User;
@@ -48,7 +49,7 @@ export class LoginComponent implements OnInit {
     } else {
       this.userService.generateUsers(this.user).subscribe((response) => {
         if (response.Success) {
-          this.message = 'Inscription réussie';
+          this.message = 'Inscription réussie'; 
           this.showMessage = true;
           window.location.href = '/login';
         } else {
