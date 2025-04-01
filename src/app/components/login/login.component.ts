@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { LoginService } from '../../services/login.service';
+import { LoginService } from '../../services/login/login.service';
 import { User } from '../../models/user';
 import { MessageToastComponent } from "../common/message-toast/message-toast.component";
 import { MessageErrorToastComponent } from "../common/message-error-toast/message-error-toast.component";
+import { UsersService } from '../../users/users.service';
 
 @Component({
   standalone: true,
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
   showLogin: boolean = true;
   showRegister: boolean = false;
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private userService: UsersService) {
     this.user = new User();
   }
 
@@ -38,25 +39,43 @@ export class LoginComponent implements OnInit {
     this.showLogin = false;
   }
 
-  register() {
+  register(): void {
+    console.log(this.user.password, " ", this.confirmPassword);
     if (this.user.password !== this.confirmPassword) {
-      console.log('Register:', this.user);
+      this.message = 'Les mots de passe ne correspondent pas';
+      this.showMessageError = true;
+      return;
+    } else {
+      this.userService.generateUsers(this.user).subscribe((response) => {
+        if (response.Success) {
+          this.message = 'Inscription réussie';
+          this.showMessage = true;
+          window.location.href = '/login';
+        } else {
+          this.message = 'Erreur lors de l\'inscription';
+          this.showMessageError = true;
+        }
+      })
     }
-    this.showMessageError = true;
-    this.message = 'Les mots de passe ne correspondent pas';
   }
 
   login(): void {
-    this.showMessage = true;
     if (this.user.email && this.user.password) {
       this.loginService.login(this.user).subscribe((response) => {
         if (response.Success) {
           this.message = 'Connecté avec succès';
-          console.log('Login successful:', response);
+          localStorage.setItem('token', response.Data); // Store the token in localStorage
+          this.showMessage = true;
+          window.location.href = '/devis';
         } else {
-          console.log('Login failed');
+          this.message = 'Connexion échouée, veuillez vérifier vos identifiants';
+          this.user.email = '';
+          this.showMessageError = true;
         }
       });
+    }else {
+      this.message = 'Veuillez remplir tous les champs';
+      this.showMessageError = true;
     }
   }
 
