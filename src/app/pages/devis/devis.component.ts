@@ -7,11 +7,13 @@ import { Motorisation } from '../../models/motorisation.model';
 import { FooterComponent } from "../../components/footer/footer.component";
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { TopBarComponent } from "../../components/top-bar/top-bar.component";
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-devis',
   standalone: true,
-  imports: [CommonModule, TopBarComponent, NavbarComponent, FooterComponent],
+  imports: [CommonModule, TopBarComponent, NavbarComponent, FooterComponent, FormsModule],
   templateUrl: './devis.component.html',
   styleUrl: './devis.component.scss'
 })
@@ -24,7 +26,7 @@ export class DevisComponent implements OnInit {
   loading = false;
   error?: string;
 
-  constructor(private marqueService: MarqueService) { }
+  constructor(private marqueService: MarqueService, private router : Router) { }
 
   ngOnInit(): void {
     this.loadMarques();
@@ -54,8 +56,19 @@ export class DevisComponent implements OnInit {
   onModeleSelect(e : any): void {
     const selectedModeleId = e.target.value;
     const selectedModele = this.modeles.find(modele => modele._id === selectedModeleId);
-    console.log(selectedModele);
     this.motorisations = selectedModele ? selectedModele.motorisations : [];
+  }
+
+  onSubmit(e : any): void {
+    e.preventDefault();
+    if (this.selectedMarque && this.modeles.length > 0) {
+      console.log('Selected Marque:', this.selectedMarque);
+      console.log('Selected Modeles:', this.modeles);
+      console.log('Selected Motorisations:', this.motorisations);
+    } else {
+      console.error('Please select a marque and modele before submitting.');
+    }
+    this.router.navigate(['/prestation']);
   }
 
 }

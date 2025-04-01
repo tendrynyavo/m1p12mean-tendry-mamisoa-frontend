@@ -8,11 +8,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ItemPrestationComponent {
 
+  @Input() id: string = '';
   @Input() nom: string = '';
   @Input() details: string = '';
   @Input() buttonLabel: string = 'Valider la prestation';
-  @Output() idItemEvent = new EventEmitter<string>();
+  @Output() itemEvent = new EventEmitter<string>();
 
   constructor() { }
+
+  onButtonClick(value : string): void {
+    this.itemEvent.emit(value);
+  }
 
 }

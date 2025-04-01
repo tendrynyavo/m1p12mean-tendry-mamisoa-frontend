@@ -1,0 +1,49 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { Diagnostic } from '../../models/diagnostic.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DiagnosticService {
+  private apiUrl = `${environment.apiURL}/diagnostics`;
+
+  constructor(private http: HttpClient) { }
+
+  // Get all diagnostics
+  getAllDiagnostics(): Observable<Diagnostic[]> {
+    return this.http.get<Diagnostic[]>(this.apiUrl);
+  }
+
+  // Get diagnostic by id
+  getDiagnosticById(id: string): Observable<Diagnostic> {
+    return this.http.get<Diagnostic>(`${this.apiUrl}/${id}`);
+  }
+
+  // Create new diagnostic
+  createDiagnostic(diagnostic: Diagnostic): Observable<Diagnostic> {
+    return this.http.post<Diagnostic>(this.apiUrl, diagnostic);
+  }
+
+  // Update diagnostic
+  updateDiagnostic(id: string, diagnostic: Diagnostic): Observable<Diagnostic> {
+    return this.http.put<Diagnostic>(`${this.apiUrl}/${id}`, diagnostic);
+  }
+
+  // Delete diagnostic
+  deleteDiagnostic(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  // Get diagnostics by mecanicien
+  getDiagnosticsByMecanicien(mecanicienId: string): Observable<Diagnostic[]> {
+    return this.http.get<Diagnostic[]>(`${this.apiUrl}/mecanicien/${mecanicienId}`);
+  }
+
+  // Update diagnostic status
+  updateDiagnosticStatus(id: string, status: number): Observable<Diagnostic> {
+    return this.http.patch<Diagnostic>(`${this.apiUrl}/${id}/status`, { status });
+  }
+}

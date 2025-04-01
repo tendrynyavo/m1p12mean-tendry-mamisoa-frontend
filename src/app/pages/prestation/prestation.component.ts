@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from "../../components/footer/footer.component";
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { TopBarComponent } from "../../components/top-bar/top-bar.component";
 import { ItemPrestationComponent } from "../../components/prestation/item.prestation.component";
+import { BesoinService } from '../../services/besoin/besoin.service';
+import { Prestation } from '../../models/besoin.model';
+import { Diagnostic } from '../../models/diagnostic.model';
+import { DiagnosticService } from '../../services/diagnostic/diagnostic.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-prestation',
@@ -11,14 +16,62 @@ import { ItemPrestationComponent } from "../../components/prestation/item.presta
   templateUrl: './prestation.component.html',
   styleUrl: './prestation.component.scss'
 })
-export class PrestationComponent {
+export class PrestationComponent implements OnInit {
 
-  prestations = [
-    { nom: 'Prestation 1', details: 'Details of Prestation 1', validation: 'Validation 1' },
-    { nom: 'Prestation 2', details: 'Details of Prestation 2', validation: 'Validation 2' },
-    { nom: 'Prestation 3', details: 'Details of Prestation 3', validation: 'Validation 3' },
-    { nom: 'Prestation 4', details: 'Details of Prestation 4', validation: 'Validation 4' },
-    { nom: 'Prestation 5', details: 'Details of Prestation 5', validation: 'Validation 5' }
-  ];
+  prestations : Prestation[] = [];
+  selectedPrestations: Prestation[] = [];
+  constructor(private besoinService: BesoinService, private diagnosticService: DiagnosticService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.besoinService.getBesoinByMotorisationId('67ea482c8bc8f9a94286de82').subscribe({
+      next: (data) => {
+        console.log(data);
+        this.prestations = data;
+      },
+      error: (err) => {
+        console.error('Error fetching besoins:', err);
+      }
+    });
+  }
+
+  onItemClickAjouter(id : string): void {
+    const index = this.prestations.findIndex(prestation => prestation._id == id);
+    const prestation = this.prestations.find(prestation => prestation._id == id);
+    if (index !== -1) {
+      this.selectedPrestations.push(prestation!);
+      this.prestations.splice(index, 1);
+      this.prestations.sort((a, b) => a.nom.localeCompare(b.nom));
+    }
+  }
+
+  onItemClickRetirer(id : string): void {
+    const index = this.selectedPrestations.findIndex(prestation => prestation._id == id);
+    const prestation = this.selectedPrestations.find(prestation => prestation._id == id);
+    if (index !== -1) {
+      this.prestations.push(prestation!);
+      this.selectedPrestations.splice(index, 1);
+      this.prestations.sort((a, b) => a.nom.localeCompare(b.nom));
+    }
+  }
+
+  onSubmit(): void {
+    const diagnostic : Diagnostic = {
+      dateDebut: new Date(),
+      dateFin: undefined,
+      reference: '123456',
+      status: 0,
+      mecanicien: '67dd506667a6ee4123d69234',
+      prestations: this.selectedPrestations,
+    };
+    this.diagnosticService.createDiagnostic(diagnostic).subscribe({
+      next: (data) => {
+        console.log('Diagnostic created:', data);
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error('Error creating diagnostic:', err);
+      }
+    });
+  }
 
 }
