@@ -4,12 +4,14 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { DevisComponent } from './pages/devis/devis.component';
 import { FiltreVehiculeComponent } from './components/filtre-vehicule/filtre-vehicule.component';
+import { PrestationComponent } from './pages/prestation/prestation.component';
 
 export const routes: Routes = [
     { path: 'articles', component: ArticleListComponent },
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent},
-    { path: 'filtre', component: FiltreVehiculeComponent},
     { path: 'devis', component: DevisComponent},
+    { path: 'filtre', component: FiltreVehiculeComponent},
+    { path: 'prestation', component: PrestationComponent},
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
