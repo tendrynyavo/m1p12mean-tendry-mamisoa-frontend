@@ -12,4 +12,11 @@ export class ListeDiagnostiqueComponent {
     { id: 1, name: 'Diagnostic 1', description: 'Description 1' },
     { id: 2, name: 'Diagnostic 2', description: 'Description 2' },
   ];
+
+  constructor() { } 
+  
+  ngOnInit(): void {
+    // Initialization logic can go here
+  }
+
 }

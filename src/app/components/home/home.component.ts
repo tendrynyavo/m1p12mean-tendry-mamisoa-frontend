@@ -7,7 +7,7 @@ import { TopBarComponent } from "../top-bar/top-bar.component";
 @Component({
   standalone: true,
   selector: 'Home',
-  imports: [CommonModule, TopBarComponent, NavbarComponent, FooterComponent],
+  imports: [CommonModule, NavbarComponent, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

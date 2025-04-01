@@ -12,19 +12,26 @@ export class LoginService {
   private apiUrl = environment.apiURL + '/login';
   constructor(private http: HttpClient) { }
 
-  private getAuthHeaders(): { [header: string]: string } {
-    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
 
   login(credentials: User): Observable<ResponseMessageData<string>> {
-    return this.http.post<ResponseMessageData<string>>(this.apiUrl, credentials, {
-      headers: this.getAuthHeaders()
-    });
+    return this.http.post<ResponseMessageData<string>>(this.apiUrl, credentials);
   }
 
   logout(): void {
-    localStorage.removeItem('token'); // Remove the token from localStorage
-    window.location.href = '/home'; // Redirect to home page or login page
+    if (typeof localStorage !== 'undefined') {
+      window.localStorage.removeItem('token'); // Remove the token from localStorage
+    }
+    if (typeof window !== 'undefined') {
+      window.location.href = '/home'; // Redirect to home page or login page
+    }
+  }
+
+  getUserDetails(token : string): Observable<ResponseMessageData<User>> {
+    if (!token) {
+      throw new Error('No token found'); // Handle the case where no token is present
+    } else {
+      const dataUser = this.http.post<ResponseMessageData<User>>(this.apiUrl + '/details-user', token);
+      return dataUser;
+    }
   }
 }

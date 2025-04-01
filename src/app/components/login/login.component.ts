@@ -6,6 +6,7 @@ import { User } from '../../models/user';
 import { MessageToastComponent } from "../common/message-toast/message-toast.component";
 import { MessageErrorToastComponent } from "../common/message-error-toast/message-error-toast.component";
 import { UsersService } from '../../users/users.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   standalone: true,
@@ -13,7 +14,7 @@ import { UsersService } from '../../users/users.service';
   imports: [CommonModule, FormsModule, MessageToastComponent, MessageErrorToastComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
-  providers: [LoginService, UsersService]
+  providers: [LoginService, UsersService, CookieService],
 })
 export class LoginComponent implements OnInit {
   user: User;
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
   showLogin: boolean = true;
   showRegister: boolean = false;
 
-  constructor(private loginService: LoginService, private userService: UsersService) {
+  constructor(private loginService: LoginService, private userService: UsersService, private cookieService: CookieService) {
     this.user = new User();
   }
 
@@ -65,7 +66,7 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.user).subscribe((response) => {
         if (response.Success) {
           this.message = 'Connecté avec succès';
-          localStorage.setItem('token', response.Data); // Store the token in localStorage
+          this.cookieService.set('token', response.Data); // Store the token in localStorage
           this.showMessage = true;
           window.location.href = '/devis';
         } else {

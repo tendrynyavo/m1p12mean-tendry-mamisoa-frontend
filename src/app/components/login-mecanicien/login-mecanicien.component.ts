@@ -5,12 +5,14 @@ import { MessageErrorToastComponent } from "../common/message-error-toast/messag
 import { MessageToastComponent } from "../common/message-toast/message-toast.component";
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'Login-mecanicien',
   imports: [CommonModule, FormsModule, MessageErrorToastComponent, MessageToastComponent],
   templateUrl: './login-mecanicien.component.html',
-  styleUrl: './login-mecanicien.component.scss'
+  styleUrl: './login-mecanicien.component.scss',
+  providers: [LoginService, CookieService],
 })
 export class LoginMecanicienComponent {
 
@@ -19,7 +21,7 @@ export class LoginMecanicienComponent {
   showMessage: boolean = false;
   showMessageError: boolean = false;
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private cookieService: CookieService) {
     this.user = new User();
   }
 
@@ -28,7 +30,7 @@ export class LoginMecanicienComponent {
       this.loginService.login(this.user).subscribe((response) => {
         if (response.Success) {
           this.message = 'Connecté avec succès';
-          localStorage.setItem('token', response.Data); // Store the token in localStorage
+          this.cookieService.set('token', response.Data); // Store the token in localStorage
           this.showMessage = true;
           window.location.href = '/home-mecanicien';
         } else {
