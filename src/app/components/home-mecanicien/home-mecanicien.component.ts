@@ -9,4 +9,8 @@ import { NavbarBackofficeComponent } from "../navbar-backoffice/navbar-backoffic
 })
 export class HomeMecanicienComponent {
 
+  constructor() { }
+
+  ngOnInit(): void {}
+  
 }
