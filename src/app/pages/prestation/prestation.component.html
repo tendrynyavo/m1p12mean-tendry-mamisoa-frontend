@@ -8,13 +8,33 @@
     <!-- Navbar End -->
 </header>
 <main>
-    <div class="container py-5">
-        <app-item-prestation
-            *ngFor="let prestation of prestations"
-            [nom]="prestation.nom"
-            [details]="prestation.details"
-        >
-        </app-item-prestation>
+    <div class="container-fluid py-5 row justify-content-between">
+        <div class="col-6 d-flex">
+            <app-item-prestation
+                *ngFor="let prestation of prestations"
+                [id]="prestation._id"
+                [nom]="prestation.nom + ': ' + prestation.prixTotal + ' Ar'"
+                [details]="prestation.piecesString"
+                (itemEvent)="onItemClickAjouter($event)"
+                [buttonLabel]="'Ajouter'"
+                class="me-3"
+            >
+            </app-item-prestation>
+        </div>
+        <div class="col-6 card px-5 pb-5 w-auto">
+            <h2 class="my-4">Prestations du devis</h2>
+            <app-item-prestation
+                *ngFor="let prestation of selectedPrestations"
+                [id]="prestation._id"
+                [nom]="prestation.nom + ': ' + prestation.prixTotal + ' Ar'"
+                [details]="prestation.piecesString"
+                (itemEvent)="onItemClickRetirer($event)"
+                [buttonLabel]="'Annuler'"
+                class="mb-3"
+            >
+            </app-item-prestation>
+            <a type="button" (click)="onSubmit()" class="btn btn-primary">Estimation de devis</a>
+        </div>
     </div>
 </main>
 <footer>
