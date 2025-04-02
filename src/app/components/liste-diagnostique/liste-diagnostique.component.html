@@ -1,23 +1,69 @@
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Référence</th>
-                <th scope="col">Date de début</th>
-                <th scope="col">Date de fin</th>
-                <th scope="col">Statut</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let diagnostique of diagnostiques">
-                <th scope="row">{{ diagnostique.reference }}</th>
-                <td>{{ diagnostique.prestations }}</td>
-                <td>{{ diagnostique.dateDebut | date: 'dd/MM/yyyy' }}</td>
-                <td>{{ diagnostique.dateFin | date: 'dd/MM/yyyy' }}</td>
-                <td>{{ diagnostique.status }}</td>
-                <td><button class="btn btn-primary" (click)="showDetails(diagnostique)">Détails</button></td>
-            </tr>
-        </tbody>
-    </table>
+<message-error-toast [message]="message" [show]="showMessageError"></message-error-toast>
+<table class="table table-borderless table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Référence</th>
+            <th scope="col">Date de début</th>
+            <th scope="col">Date de fin</th>
+            <th scope="col">Statut</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let diagnostique of diagnostiques">
+            <th scope="row">{{ diagnostique.reference }}</th>
+            <td>{{ diagnostique.dateDebut | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ diagnostique.dateFin | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ diagnostique.status }}</td>
+            <td><button class="btn btn-primary" (click)="showDetails(diagnostique)">Détails</button></td>
+        </tr>
+    </tbody>
+</table>
+<!-- 
+ -->
+<div class="fade modal" tabindex="-1" id="detailsDiagnostiqueModal" role="dialog" [ngClass]="{'show': showModal}"
+    style="display: block;" *ngIf="showModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Détails de {{ currentDiagnostic?.reference }}</h5>
+                <button type="button" (click)="toggleModal()" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row pl-2">
+                    <label class="form-label" for="dateDebut"> Date de début: <strong>{{ currentDiagnostic?.dateDebut |
+                            date:
+                            'dd/MM/yyyy' }}</strong> </label>
+                </div>
+                <div class="row">
+                    <label class="form-label" for="dateFin"> Date de fin: <strong>{{ currentDiagnostic?.dateFin | date:
+                            'dd/MM/yyyy' }}</strong> </label>
+                </div>
+                <div class="row">
+                    <label class="form-label" for="status"> Statut: <strong>{{ currentDiagnostic?.status
+                            }}</strong></label>
+                </div>
+                <div class="row">
+                    <label class="form-label" for="prestation"> Prestation:</label>
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col">
+                            <ul>
+                                <li *ngFor="let prestation of currentDiagnostic?.prestations">Nom: <strong>{{
+                                        prestation.nom }}</strong>, Temps estimé: <strong>{{ prestation.tempsEstime }}
+                                        heure(s)</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="toggleModal()"
+                    data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-warning" *ngIf="showUpdateStatus" (click)="updateStatus(currentDiagnostic ?? undefined)">Mettre à jour
+                    le statut</button>
+            </div>
+        </div>
+    </div>
 </div>

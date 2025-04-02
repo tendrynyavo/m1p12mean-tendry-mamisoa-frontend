@@ -37,13 +37,11 @@ export class HomeMecanicienComponent {
   ngOnInit(): void {
     this.checkIfLogged(); // Check login status on initialization
     this.getUserDetails(); // Fetch user details on initialization
-    this.getRealisationAndDiagnostic();
   }
 
   ngOnChange(): void {
     this.checkIfLogged(); // Check login status on changes
     this.getUserDetails(); // Fetch user details on changes    
-    this.getRealisationAndDiagnostic();
   }
 
   checkIfLogged() {
@@ -62,15 +60,21 @@ export class HomeMecanicienComponent {
     };
     this.loginService.getUserDetails(dataToSend).subscribe((response) => {
       this.user = response.Data;
+      this.getRealisationAndDiagnostic();
     });
   }
 
   getRealisationAndDiagnostic(): void {
-    this.realisationService.getRealisationByMecanicien(this.user._id).subscribe((response) => {
-      this.realisation = response as Realisation[];
-    });
-    this.diagnosticService.getDiagnosticsByMecanicien(this.user._id).subscribe((response) => {
-      this.diagnostic = response as Diagnostic[];
-    });
+    try{
+      this.realisationService.getRealisationByMecanicien(this.user.id).subscribe((response) => {
+        this.realisations = response as Realisation[];
+      });
+      this.diagnosticService.getDiagnosticsByMecanicien(this.user.id).subscribe((response) => {
+        this.diagnostics = response as Diagnostic[];
+      });
+    } catch (error) { 
+      this.document.location.href = '/login-mecanicien';
+      console.error('Error fetching realizations and diagnostics:', error);
+    }
   }
 }
