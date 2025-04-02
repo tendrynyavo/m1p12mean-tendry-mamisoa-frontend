@@ -3,7 +3,7 @@ import { Realisation } from '../../models/realisation.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-liste-realisation',
+  selector: 'Liste-realisation',
   imports: [CommonModule],
   templateUrl: './liste-realisation.component.html',
   styleUrl: './liste-realisation.component.scss'

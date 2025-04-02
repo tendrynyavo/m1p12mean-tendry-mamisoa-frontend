@@ -8,10 +8,12 @@ import { Realisation } from '../../models/realisation.model';
 import { Diagnostic } from '../../models/diagnostic.model';
 import { DiagnosticService } from '../../services/diagnostic/diagnostic.service';
 import { RealisationService } from '../../services/realisation/realisation.service';
+import { ListeDiagnostiqueComponent } from "../liste-diagnostique/liste-diagnostique.component";
+import { ListeRealisationComponent } from "../liste-realisation/liste-realisation.component";
 
 @Component({
   selector: 'Home-mecanicien',
-  imports: [NavbarBackofficeComponent],
+  imports: [NavbarBackofficeComponent, ListeDiagnostiqueComponent, ListeRealisationComponent],
   templateUrl: './home-mecanicien.component.html',
   styleUrl: './home-mecanicien.component.scss',
   providers: [LoginService, CookieService],
@@ -19,8 +21,8 @@ import { RealisationService } from '../../services/realisation/realisation.servi
 export class HomeMecanicienComponent {
 
   user: User;
-  realisation: Realisation[] = []; // Initialize realization as an empty array
-  diagnostic: Diagnostic[] = []; // Initialize diagnostic as an empty array
+  realisations: Realisation[] = []; // Initialize realization as an empty array
+  diagnostics: Diagnostic[] = []; // Initialize diagnostic as an empty array
 
   constructor(
     private loginService: LoginService, 
@@ -35,11 +37,13 @@ export class HomeMecanicienComponent {
   ngOnInit(): void {
     this.checkIfLogged(); // Check login status on initialization
     this.getUserDetails(); // Fetch user details on initialization
+    this.getRealisationAndDiagnostic();
   }
 
   ngOnChange(): void {
     this.checkIfLogged(); // Check login status on changes
-    this.getUserDetails(); // Fetch user details on changes
+    this.getUserDetails(); // Fetch user details on changes    
+    this.getRealisationAndDiagnostic();
   }
 
   checkIfLogged() {
@@ -58,13 +62,15 @@ export class HomeMecanicienComponent {
     };
     this.loginService.getUserDetails(dataToSend).subscribe((response) => {
       this.user = response.Data;
-      console.log(this.user); // Log user details to console
     });
   }
 
   getRealisationAndDiagnostic(): void {
     this.realisationService.getRealisationByMecanicien(this.user._id).subscribe((response) => {
       this.realisation = response as Realisation[];
+    });
+    this.diagnosticService.getDiagnosticsByMecanicien(this.user._id).subscribe((response) => {
+      this.diagnostic = response as Diagnostic[];
     });
   }
 }

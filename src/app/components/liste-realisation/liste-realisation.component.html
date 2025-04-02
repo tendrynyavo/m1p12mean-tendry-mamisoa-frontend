@@ -2,17 +2,16 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Date</th>
-                <th scope="col">Prix</th>
-                <th scope="col">Action</th>
+                <th scope="col">Référence</th>
+                <th scope="col">Date de début</th>
+                <th scope="col">Date de fin</th>
+                <th scope="col">Statut</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let realisation of realisations">
                 <th scope="row">{{ realisation.reference }}</th>
-                <td>{{ realisation.prestations }}</td>
                 <td>{{ realisation.dateDebut | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ realisation.dateFin | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ realisation.status }}</td>

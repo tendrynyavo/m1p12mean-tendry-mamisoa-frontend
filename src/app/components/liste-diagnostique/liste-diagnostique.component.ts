@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Diagnostic } from '../../models/diagnostic.model';
 
 @Component({
-  selector: 'app-liste-diagnostique',
+  selector: 'Liste-diagnostique',
   imports: [CommonModule],
   templateUrl: './liste-diagnostique.component.html',
   styleUrl: './liste-diagnostique.component.scss'
