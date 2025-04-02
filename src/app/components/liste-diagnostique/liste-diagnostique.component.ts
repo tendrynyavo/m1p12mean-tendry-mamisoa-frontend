@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Diagnostic } from '../../models/diagnostic.model';
 
 @Component({
   selector: 'app-liste-diagnostique',
@@ -8,15 +9,16 @@ import { Component } from '@angular/core';
   styleUrl: './liste-diagnostique.component.scss'
 })
 export class ListeDiagnostiqueComponent {
-  diagnostiques: any[] = [
-    { id: 1, name: 'Diagnostic 1', description: 'Description 1' },
-    { id: 2, name: 'Diagnostic 2', description: 'Description 2' },
-  ];
+  diagnostiques: Diagnostic[] = [];
 
-  constructor() { } 
-  
+  constructor() { }
+
   ngOnInit(): void {
     // Initialization logic can go here
   }
 
+  showDetails(diagnostic: Diagnostic): void {
+    // Logic to show details of the diagnostic
+    console.log('Showing details for:', diagnostic);
+  }
 }

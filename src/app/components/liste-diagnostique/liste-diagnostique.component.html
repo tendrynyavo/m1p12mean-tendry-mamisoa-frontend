@@ -11,5 +11,13 @@
         </thead>
         <tbody>
             <tr *ngFor="let diagnostique of diagnostiques">
+                <th scope="row">{{ diagnostique.reference }}</th>
+                <td>{{ diagnostique.prestations }}</td>
+                <td>{{ diagnostique.dateDebut | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ diagnostique.dateFin | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ diagnostique.status }}</td>
+                <td><button class="btn btn-primary" (click)="showDetails(diagnostique)">Détails</button></td>
+            </tr>
+        </tbody>
     </table>
 </div>

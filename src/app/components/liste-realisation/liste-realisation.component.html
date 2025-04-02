@@ -1,1 +1,23 @@
-<p>liste-realisation works!</p>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Date</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let realisation of realisations">
+                <th scope="row">{{ realisation.reference }}</th>
+                <td>{{ realisation.prestations }}</td>
+                <td>{{ realisation.dateDebut | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ realisation.dateFin | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ realisation.status }}</td>
+                <td><button class="btn btn-primary" (click)="showDetails(realisation)">Détails</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

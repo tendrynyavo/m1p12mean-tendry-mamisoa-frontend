@@ -4,6 +4,10 @@ import { LoginService } from '../../services/login/login.service';
 import { User } from '../../models/user';
 import { CookieService } from 'ngx-cookie-service';
 import { DOCUMENT } from '@angular/common';
+import { Realisation } from '../../models/realisation.model';
+import { Diagnostic } from '../../models/diagnostic.model';
+import { DiagnosticService } from '../../services/diagnostic/diagnostic.service';
+import { RealisationService } from '../../services/realisation/realisation.service';
 
 @Component({
   selector: 'Home-mecanicien',
@@ -15,9 +19,14 @@ import { DOCUMENT } from '@angular/common';
 export class HomeMecanicienComponent {
 
   user: User;
+  realisation: Realisation[] = []; // Initialize realization as an empty array
+  diagnostic: Diagnostic[] = []; // Initialize diagnostic as an empty array
+
   constructor(
     private loginService: LoginService, 
     private cookieService: CookieService,
+    private diagnosticService: DiagnosticService,
+    private realisationService: RealisationService,
     @Inject(DOCUMENT) private document: Document // Inject DOCUMENT
   ) {
     this.user = new User();
@@ -50,6 +59,12 @@ export class HomeMecanicienComponent {
     this.loginService.getUserDetails(dataToSend).subscribe((response) => {
       this.user = response.Data;
       console.log(this.user); // Log user details to console
+    });
+  }
+
+  getRealisationAndDiagnostic(): void {
+    this.realisationService.getRealisationByMecanicien(this.user._id).subscribe((response) => {
+      this.realisation = response as Realisation[];
     });
   }
 }
