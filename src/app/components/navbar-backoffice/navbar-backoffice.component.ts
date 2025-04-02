@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -12,8 +12,11 @@ import { CookieService } from 'ngx-cookie-service';
 export class NavbarBackofficeComponent {
   isLoggedIn: boolean = false;
 
-  constructor(private cookieService: CookieService) { }
-  
+  constructor(
+    private cookieService: CookieService,
+    @Inject(DOCUMENT) private document: Document // Inject DOCUMENT
+  ) { }
+
   ngOnInit(): void {
     this.checkLoginStatus(); // Check login status on initialization
   }
@@ -24,7 +27,12 @@ export class NavbarBackofficeComponent {
 
   checkLoginStatus() {
     const token = this.cookieService.get('token'); // Assuming token is stored in localStorage
-    this.isLoggedIn = !!token; // Convert to boolean
+    this.isLoggedIn = token ? true : false; // Convert to boolean
     return;
+  }
+
+  logout(): void {
+    this.cookieService.delete('token', '/'); // Delete the token from cookies
+    this.document.location.href = '/';
   }
 }

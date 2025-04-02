@@ -9,12 +9,8 @@ import { LoginComponent } from './components/login/login.component';
 import { DevisComponent } from './pages/devis/devis.component';
 import { PrestationComponent } from './pages/prestation/prestation.component';
 import { LoginService } from './services/login/login.service';
+import { CookieService } from 'ngx-cookie-service';
 
-const logout = () => {
-    const loginService = new LoginService(inject(HttpClient));
-    loginService.logout();
-    return true;
-}
 
 export const routes: Routes = [
     { path: 'articles', component: ArticleListComponent },
@@ -23,7 +19,13 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent},    
     { 
         path: 'logout', 
-        resolve: {logout},
+        resolve: {
+            logout: () => {
+                const cookieService = inject(CookieService);
+                cookieService.delete('token', '/'); // Delete the token from cookies
+                return true;
+            }
+        },
         redirectTo: 'home',
         pathMatch: 'full'
     },
@@ -32,3 +34,13 @@ export const routes: Routes = [
     { path: 'prestation', component: PrestationComponent},
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
+
+// // Ensure the resolve function is properly registered and executed
+// export function logoutResolver() {
+//     const cookieService = inject(CookieService);
+//     cookieService.delete('token', '/'); // Delete the token from cookies
+//     return true;
+// }
+
+// // Update the route to use the resolver function
+// routes.find(route => route.path === 'logout')!.resolve = { logout: logoutResolver };

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { LoginService } from '../../services/login/login.service';
 import { User } from '../../models/user';
 import { MessageToastComponent } from "../common/message-toast/message-toast.component";
@@ -25,7 +25,12 @@ export class LoginComponent implements OnInit {
   showLogin: boolean = true;
   showRegister: boolean = false;
 
-  constructor(private loginService: LoginService, private userService: UsersService, private cookieService: CookieService) {
+  constructor(
+    private loginService: LoginService,
+    private userService: UsersService,
+    private cookieService: CookieService,
+    @Inject(DOCUMENT) private document: Document // Inject DOCUMENT
+  ) {
     this.user = new User();
   }
 
@@ -52,7 +57,7 @@ export class LoginComponent implements OnInit {
         if (response.Success) {
           this.message = 'Inscription réussie'; 
           this.showMessage = true;
-          window.location.href = '/login';
+          this.document.location.href = '/login';
         } else {
           this.message = 'Erreur lors de l\'inscription';
           this.showMessageError = true;
@@ -68,7 +73,7 @@ export class LoginComponent implements OnInit {
           this.message = 'Connecté avec succès';
           this.cookieService.set('token', response.Data); // Store the token in localStorage
           this.showMessage = true;
-          window.location.href = '/devis';
+          this.document.location.href = '/devis';
         } else {
           this.message = 'Connexion échouée, veuillez vérifier vos identifiants';
           // this.user.email = '';  

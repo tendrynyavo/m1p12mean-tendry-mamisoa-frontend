@@ -1,17 +1,17 @@
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="/home" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-      <h2 class="m-0 text-primary"><i class="fa fa-car me-3"></i>CarServ</h2>
-    </a>
-    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <div class="navbar-nav ms-auto p-4 p-lg-0">
-        <a href="/home-mecanicien" class="nav-item nav-link active">Acceuil</a>
-        <!-- <a href="about.html" class="nav-item nav-link">About</a>
+  <a href="/home" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+    <h2 class="m-0 text-primary"><i class="fa fa-car me-3"></i>CarServ</h2>
+  </a>
+  <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav ms-auto p-4 p-lg-0">
+      <a href="/home-mecanicien" class="nav-item nav-link active">Acceuil</a>
+      <!-- <a href="about.html" class="nav-item nav-link">About</a>
         <a href="filtre" class="nav-item nav-link">Services</a> -->
-        <!-- <div class="nav-item dropdown">
+      <!-- <div class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
           <div class="dropdown-menu fade-up m-0">
             <a href="booking.html" class="dropdown-item">Booking</a>
@@ -21,11 +21,11 @@
           </div>
         </div>
         <a href="contact.html" class="nav-item nav-link">Contact</a> -->
-      </div>
-      <a *ngIf="!isLoggedIn" href="/login-mecanicien" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Se connecter<i
-        class="fa fa-arrow-right ms-3"></i></a>
-      <a *ngIf="isLoggedIn" href="/logout" class="btn btn-danger py-4 px-lg-5 d-none d-lg-block">Se déconnecter<i
-        class="fa fa-arrow-right ms-3"></i></a>
     </div>
-  </nav>
-  <!-- Navbar End -->
+    <a *ngIf="!isLoggedIn" href="/login-mecanicien" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Se
+      connecter<i class="fa fa-arrow-right ms-3"></i></a>
+    <a *ngIf="isLoggedIn" href="#" (click)="logout()" class="btn btn-danger py-4 px-lg-5 d-none d-lg-block">Se
+      déconnecter<i class="fa fa-arrow-right ms-3"></i></a>
+  </div>
+</nav>
+<!-- Navbar End -->

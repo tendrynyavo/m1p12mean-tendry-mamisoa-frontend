@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { User } from '../../models/user';
 import { LoginService } from '../../services/login/login.service';
 import { MessageErrorToastComponent } from "../common/message-error-toast/message-error-toast.component";
 import { MessageToastComponent } from "../common/message-toast/message-toast.component";
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -21,7 +21,11 @@ export class LoginMecanicienComponent {
   showMessage: boolean = false;
   showMessageError: boolean = false;
 
-  constructor(private loginService: LoginService, private cookieService: CookieService) {
+  constructor(
+    private loginService: LoginService,
+    private cookieService: CookieService,
+    @Inject(DOCUMENT) private document: Document // Inject DOCUMENT
+  ) {
     this.user = new User();
   }
 
@@ -32,7 +36,7 @@ export class LoginMecanicienComponent {
           this.message = 'Connecté avec succès';
           this.cookieService.set('token', response.Data); // Store the token in localStorage
           this.showMessage = true;
-          window.location.href = '/home-mecanicien';
+          this.document.location.href = '/home-mecanicien';
         } else {
           this.message = 'Connexion échouée, veuillez vérifier vos identifiants';
           // this.user.email = '';
