@@ -6,6 +6,6 @@ export interface Diagnostic {
     dateFin?: Date;
     reference: string;
     status: number;
-    mecanicien: string;  // ID of mecanicien
+    mecanicien: string;
     prestations: Prestation[];
 }

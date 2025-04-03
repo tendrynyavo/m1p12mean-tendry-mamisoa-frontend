@@ -22,7 +22,7 @@ export class DevisComponent implements OnInit {
   marques: Marque[] = [];
   modeles: Modele[] = [];
   motorisations: Motorisation[] = [];
-  selectedMarque?: string;
+  selectedMotorisation?: string;
   loading = false;
   error?: string;
 
@@ -49,8 +49,8 @@ export class DevisComponent implements OnInit {
   }
 
   onMarqueSelect(e : any): void {
-    this.selectedMarque = e.target.value;
-    this.modeles = this.marques.find(marque => marque._id === this.selectedMarque)?.modeles || [];
+    const selectedMarqueId = e.target.value;
+    this.modeles = this.marques.find(marque => marque._id === selectedMarqueId)?.modeles || [];
   }
 
   onModeleSelect(e : any): void {
@@ -59,16 +59,23 @@ export class DevisComponent implements OnInit {
     this.motorisations = selectedModele ? selectedModele.motorisations : [];
   }
 
+  onMotorisationSelect(e : any): void {
+    const selectedMotorisationId = e.target.value;
+    const selectedMotorisation = this.motorisations.find(motorisation => motorisation._id === selectedMotorisationId);
+    if (selectedMotorisation)
+      this.selectedMotorisation = selectedMotorisationId;
+    this.error = undefined;
+  }
+
   onSubmit(e : any): void {
     e.preventDefault();
-    if (this.selectedMarque && this.modeles.length > 0) {
-      console.log('Selected Marque:', this.selectedMarque);
-      console.log('Selected Modeles:', this.modeles);
-      console.log('Selected Motorisations:', this.motorisations);
+    console.log('Selected motorisation:', this.selectedMotorisation);
+    if (this.selectedMotorisation) {
+      this.router.navigate(['/prestations', this.selectedMotorisation]);
     } else {
+      this.error = 'Please select a motorisation before submitting.';
       console.error('Please select a marque and modele before submitting.');
     }
-    this.router.navigate(['/prestation']);
   }
 
 }

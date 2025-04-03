@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FiltreVehiculeComponent } from './components/filtre-vehicule/filtre-vehicule.component';
 import { DevisComponent } from './pages/devis/devis.component';
 import { PrestationComponent } from './pages/prestation/prestation.component';
+import { EstimationComponent } from './pages/devis/estimation/estimation.component';
 
 export const routes: Routes = [
     { path: 'articles', component: ArticleListComponent },
@@ -12,7 +13,8 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent},
     { path: 'devis', component: DevisComponent},
     { path: 'filtre', component: FiltreVehiculeComponent},
-    { path: 'prestation', component: PrestationComponent},
+    { path: 'prestations/:motorisationId', component: PrestationComponent},
+    { path: 'estimations/:id', component: EstimationComponent},
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 
 ];
