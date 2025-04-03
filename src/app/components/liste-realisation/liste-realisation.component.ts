@@ -43,9 +43,9 @@ export class ListeRealisationComponent {
       return; // Handle the case where realisation is undefined
     }
     // Logic to update the status of the realisation
-    const newStatus = realisation.status + 10; // Example status update
-    this.realisationService.updateRealisationStatus(realisation.id, newStatus).subscribe(
-      (response) => {
+    realisation.status = realisation.status ?? 0 + 10; // Example status update
+    this.realisationService.updateRealisation(realisation.id, realisation).subscribe(
+      (response: Realisation) => {
         this.currentRealisation = response; // Update the current realisation with the new status
         const index = this.realisations.findIndex(r => r.id === realisation.id);
         if (index !== -1) {
@@ -53,7 +53,7 @@ export class ListeRealisationComponent {
         }
         // Optionally, you can refresh the list of realisations or update the UI accordingly
       },
-      (error) => {
+      (error: any) => {
         this.message = 'Une erreur est survenue: ' + error.message; // Set the error message
         this.showMessageError = true;
       }

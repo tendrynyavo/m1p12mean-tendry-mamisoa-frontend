@@ -43,9 +43,10 @@ export class ListeDiagnostiqueComponent {
     return; // Handle the case where realisation is undefined
   }
     // Logic to update the status of the diagnostic
-    const newStatus = diagnostic.status + 10; // Example status update
-    this.diagnosticService.updateDiagnosticStatus(diagnostic._id ?? "", newStatus).subscribe(
-      (response) => {
+    const newStatus =  // Example status update
+    diagnostic.status = diagnostic.status + 10;
+    this.diagnosticService.updateDiagnostic(diagnostic._id ?? "", diagnostic).subscribe(
+      (response : Diagnostic) => {
         this.currentDiagnostic = response; // Update the current diagnostic with the new status
         const index = this.diagnostiques.findIndex(r => r._id === diagnostic._id);
         if (index !== -1) {
@@ -53,7 +54,7 @@ export class ListeDiagnostiqueComponent {
         }
         // Optionally, you can refresh the list of realisations or update the UI accordingly
       },
-      (error) => {
+      (error: any) => {
         this.message = 'Une erreur est survenue: ' + error.message; // Set the error message
         this.showMessageError = true;
       }
