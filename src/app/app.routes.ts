@@ -8,7 +8,6 @@ import { LoginMecanicienComponent } from './components/login-mecanicien/login-me
 import { LoginComponent } from './components/login/login.component';
 import { DevisComponent } from './pages/devis/devis.component';
 import { PrestationComponent } from './pages/prestation/prestation.component';
-import { LoginService } from './services/login/login.service';
 import { CookieService } from 'ngx-cookie-service';
 
 
@@ -21,7 +20,7 @@ export const routes: Routes = [
         path: 'logout', 
         resolve: {
             logout: () => {
-                const cookieService = inject(CookieService);
+                const cookieService: CookieService = inject(CookieService);
                 cookieService.delete('token', '/'); // Delete the token from cookies
                 return true;
             }
@@ -34,13 +33,3 @@ export const routes: Routes = [
     { path: 'prestation', component: PrestationComponent},
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
-
-// // Ensure the resolve function is properly registered and executed
-// export function logoutResolver() {
-//     const cookieService = inject(CookieService);
-//     cookieService.delete('token', '/'); // Delete the token from cookies
-//     return true;
-// }
-
-// // Update the route to use the resolver function
-// routes.find(route => route.path === 'logout')!.resolve = { logout: logoutResolver };

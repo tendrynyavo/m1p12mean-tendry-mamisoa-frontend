@@ -48,42 +48,41 @@ export class LoginComponent implements OnInit {
 
   register(): void {
     console.log(this.user.password, " ", this.confirmPassword);
-    if (this.user.password !== this.confirmPassword) {
+    if (this.user.password == this.confirmPassword) {
       this.message = 'Les mots de passe ne correspondent pas';
       this.showMessageError = true;
       return;
-    } else {
-      this.userService.generateUsers(this.user).subscribe((response) => {
-        if (response.Success) {
-          this.message = 'Inscription réussie'; 
-          this.showMessage = true;
-          this.document.location.href = '/login';
-        } else {
-          this.message = 'Erreur lors de l\'inscription';
-          this.showMessageError = true;
-        }
-      })
     }
+    this.userService.generateUsers(this.user).subscribe((response) => {
+      if (response.Success) {
+        this.message = 'Inscription réussie'; 
+        this.showMessage = true;
+        this.document.location.href = '/login';
+      } else {
+        this.message = 'Erreur lors de l\'inscription';
+        this.showMessageError = true;
+      }
+    })
   }
 
   login(): void {
-    if (this.user.email && this.user.password) {
-      this.loginService.login(this.user).subscribe((response) => {
-        if (response.Success) {
-          this.message = 'Connecté avec succès';
-          this.cookieService.set('token', response.Data); // Store the token in localStorage
-          this.showMessage = true;
-          this.document.location.href = '/devis';
-        } else {
-          this.message = 'Connexion échouée, veuillez vérifier vos identifiants';
-          // this.user.email = '';  
-          this.showMessageError = true;
-        }
-      });
-    }else {
+    if (!this.user.email || !this.user.password) {
       this.message = 'Veuillez remplir tous les champs';
       this.showMessageError = true;
+      return;
     }
+    this.loginService.login(this.user).subscribe((response) => {
+      if (response.Success) {
+        this.message = 'Connecté avec succès';
+        this.cookieService.set('token', response.Data); // Store the token in localStorage
+        this.showMessage = true;
+        this.document.location.href = '/devis';
+      } else {
+        this.message = 'Connexion échouée, veuillez vérifier vos identifiants';
+        // this.user.email = '';  
+        this.showMessageError = true;
+      }
+    });
   }
 
 }

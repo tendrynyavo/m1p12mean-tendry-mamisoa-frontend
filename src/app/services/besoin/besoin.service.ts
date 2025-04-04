@@ -1,44 +1,42 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Besoin, Prestation } from '../../models/besoin.model';
+import { BaseService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BesoinService {
-  private apiUrl = environment.apiURL + '/besoins';
+export class BesoinService extends BaseService {
 
-  constructor(private http: HttpClient) { }
+  override baseUrl = `/besoins`;
 
   // Get all besoins
   getAllBesoins(): Observable<Besoin[]> {
-    return this.http.get<Besoin[]>(this.apiUrl);
+    return this.http.get<Besoin[]>(this.getBaseUrl(), this.getAuthHeaders());
   }
 
   // Get besoin by id
   getBesoinById(id: string): Observable<Besoin> {
-    return this.http.get<Besoin>(`${this.apiUrl}/${id}`);
+    return this.http.get<Besoin>(`${this.getBaseUrl()}/${id}`, this.getAuthHeaders());
   }
 
   // Create new besoin
   createBesoin(besoin: Besoin): Observable<Besoin> {
-    return this.http.post<Besoin>(this.apiUrl, besoin);
+    return this.http.post<Besoin>(this.getBaseUrl(), besoin, this.getAuthHeaders());
   }
 
   // Update besoin
   updateBesoin(id: string, besoin: Besoin): Observable<Besoin> {
-    return this.http.put<Besoin>(`${this.apiUrl}/${id}`, besoin);
+    return this.http.put<Besoin>(`${this.getBaseUrl()}/${id}`, besoin, this.getAuthHeaders());
   }
 
   // Delete besoin
   deleteBesoin(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.getBaseUrl()}/${id}`, this.getAuthHeaders());
   }
 
   getBesoinByMotorisationId(motorisationId: string): Observable<Prestation[]> {
-    return this.http.get<Prestation[]>(`${this.apiUrl}/motorisations/${motorisationId}`);
+    return this.http.get<Prestation[]>(`${this.getBaseUrl()}/motorisations/${motorisationId}`, this.getAuthHeaders());
   }
 
 }
