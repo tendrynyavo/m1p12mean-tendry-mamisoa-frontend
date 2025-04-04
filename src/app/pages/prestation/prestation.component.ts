@@ -8,7 +8,7 @@ import { BesoinService } from '../../services/besoin/besoin.service';
 import { Prestation } from '../../models/besoin.model';
 import { Diagnostic } from '../../models/diagnostic.model';
 import { DiagnosticService } from '../../services/diagnostic/diagnostic.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-prestation',
@@ -20,10 +20,24 @@ export class PrestationComponent implements OnInit {
 
   prestations : Prestation[] = [];
   selectedPrestations: Prestation[] = [];
-  constructor(private besoinService: BesoinService, private diagnosticService: DiagnosticService, private router: Router) { }
+  motorisationId: string = '';
+
+  constructor(
+    private route: ActivatedRoute,
+    private besoinService: BesoinService, 
+    private diagnosticService: DiagnosticService, 
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.besoinService.getBesoinByMotorisationId('67ea482c8bc8f9a94286de82').subscribe({
+    this.route.params.subscribe(params => {
+      this.motorisationId = params['motorisationId'];
+      this.loadPrestations();
+    });
+  }
+
+  loadPrestations(): void {
+    this.besoinService.getBesoinByMotorisationId(this.motorisationId).subscribe({
       next: (data) => {
         console.log(data);
         this.prestations = data;
@@ -65,8 +79,7 @@ export class PrestationComponent implements OnInit {
     };
     this.diagnosticService.createDiagnostic(diagnostic).subscribe({
       next: (data) => {
-        console.log('Diagnostic created:', data);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/estimations', data._id]);
       },
       error: (err) => {
         console.error('Error creating diagnostic:', err);

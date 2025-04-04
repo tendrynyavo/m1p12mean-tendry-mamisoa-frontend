@@ -1,0 +1,41 @@
+<header>
+    <!-- Topbar Start -->
+    <Top-bar></Top-bar>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <Navbar></Navbar>
+    <!-- Navbar End -->
+</header>
+<main>
+    <div class="container-fluid">
+        <div class="card mt-4 p-4" style="width: 25rem;">
+            <div>
+                <ul>
+                    <li>Reference : </li>
+                    <li>Voiture : </li>
+                    <li>Immatriculation : </li>
+                    <li>Mecanicien : </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="my-4">Prestations du devis</h3>
+                <app-item-prestation
+                    *ngFor="let prestation of prestations"
+                    [id]="prestation._id"
+                    [nom]="prestation.nom + ': ' + prestation.prixTotal + ' Ar'"
+                    [details]="prestation.piecesString"
+                    [buttonLabel]="'Annuler'"
+                    class="mb-3"
+                >
+                </app-item-prestation>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <!-- Footer Start -->
+    <Footer-garage></Footer-garage>
+    <!-- Footer End -->
+</footer>

@@ -10,6 +10,7 @@ import { DevisComponent } from './pages/devis/devis.component';
 import { PrestationComponent } from './pages/prestation/prestation.component';
 import { CookieService } from 'ngx-cookie-service';
 
+import { EstimationComponent } from './pages/devis/estimation/estimation.component';
 
 export const routes: Routes = [
     { path: 'articles', component: ArticleListComponent },
@@ -30,6 +31,7 @@ export const routes: Routes = [
     },
     { path: 'login-mecanicien', component: LoginMecanicienComponent},
     { path: 'devis', component: DevisComponent},
-    { path: 'prestation', component: PrestationComponent},
+    { path: 'prestations/:motorisationId', component: PrestationComponent},
+    { path: 'estimations/:id', component: EstimationComponent},
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

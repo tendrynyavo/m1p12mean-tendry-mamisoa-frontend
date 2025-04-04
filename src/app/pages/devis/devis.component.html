@@ -47,7 +47,11 @@
                   </select>
                 </div>
                 <div class="col-12 col-sm-6">
-                      <select class="form-select border-0" style="height: 55px;">
+                      <select
+                        class="form-select border-0" 
+                        style="height: 55px;"
+                        (change)="onMotorisationSelect($event)"
+                      >
                           <option selected>Selectionner Motorisation</option>
                           <option 
                             *ngFor="let motorisation of motorisations" 
@@ -57,6 +61,7 @@
                           </option>
                       </select>
                 </div>
+                <h3 class="">{{ error }}</h3>
                 <div class="col-12">
                   <button class="btn btn-secondary w-100 py-3" type="submit">Valider</button>
                 </div>
